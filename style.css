@@ -58,9 +58,6 @@
     opacity: 0.65;
     pointer-events: none;
 }
-.wlook-s-filters {
-    display: flex;
-    flex-wrap: wrap;
 .wlook-s-body {
     flex: 1;
     overflow-y: auto;
@@ -70,6 +67,7 @@
     padding: 42px;
     text-align: center;
     opacity: 0.65;
+}
 .wlook-spin-anim { animation: wlook-spin 1s linear infinite; }
 @keyframes wlook-spin { to { transform: rotate(360deg); } }
 .wlook-target-row { display: flex; flex-direction: column; gap: 4px; margin: 8px 0; }
@@ -107,6 +105,7 @@
   .wlook-l-overlay { padding-top: max(env(safe-area-inset-top, 0px), 40px); }
   .wlook-l-modal { width: calc(100% - 16px); max-height: calc(100dvh - 56px); }
   .wlook-l-actions .wlook-l-send { flex: 1 1 100%; }
+}
 
 /* ── свои внешности (без сайта) ── */
 .wlook-l-section { padding: 8px 12px 0; font-size: 0.85em; font-weight: 700; color: var(--SmartThemeQuoteColor, #999); }
@@ -115,3 +114,28 @@
 .wlook-l-mine-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 .wlook-l-mine-actions .menu_button { margin: 4px 0 0; }
 .wlook-l-custom[open] { border: 1px solid var(--SmartThemeBorderColor); border-radius: 10px; padding: 6px 10px 10px; }
+
+/* ── страховка вёрстки (телефон / узкое окно) ── */
+.wlook-l-overlay { position: fixed; inset: 0; align-items: flex-start; justify-content: center; overflow: hidden; }
+.wlook-l-modal { display: flex; flex-direction: column; width: calc(100% - 16px); max-width: 640px; box-sizing: border-box; }
+.wlook-l-targetrow { padding: 8px 12px 0; }
+.wlook-l-targetrow .wlook-l-block { width: 100%; flex: 1 1 100%; }
+.wlook-l-tpl, .wlook-l-custom { flex: 0 0 auto; }
+.wlook-l-custom { max-height: 45%; overflow-y: auto; }
+.wlook-l-mine-actions .menu_button, .wlook-l-actions .menu_button { width: auto; flex: 0 0 auto; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: normal; text-align: left; }
+.wlook-l-mine-actions .menu_button { flex: 1 1 auto; }
+.wlook-l-actions .wlook-l-send { flex: 1 1 160px; }
+.wlook-l-section { padding: 10px 12px 0; }
+.wlook-l-card { background: rgba(255,255,255,0.03); }
+.wlook-l-name { word-break: break-word; }
+.wlook-target-row input, .wlook-target-row select { width: 100%; box-sizing: border-box; }
+
+/* ── окно поверх всего (<dialog> в верхнем слое) ── */
+dialog.wlook-l-overlay {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  max-width: none; max-height: none; margin: 0; border: 0;
+  background: rgba(0, 0, 0, 0.76); color: var(--SmartThemeBodyColor, inherit);
+  z-index: 2147483647;
+}
+dialog.wlook-l-overlay:not([open]) { display: none; }
+dialog.wlook-l-overlay::backdrop { background: transparent; }

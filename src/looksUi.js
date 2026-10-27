@@ -14,7 +14,7 @@ export function openLooks(adapters) {
     const urls = siteUrls(getUrl());
     document.getElementById('wlook-l-overlay')?.remove();
 
-    const overlay = document.createElement('div');
+    const overlay = document.createElement('dialog');
     overlay.id = 'wlook-l-overlay';
     overlay.className = 'wlook-s-overlay wlook-l-overlay';
     overlay.innerHTML = `
@@ -45,6 +45,9 @@ export function openLooks(adapters) {
             <div class="wlook-s-body wlook-l-body"><div class="wlook-s-loading">Загрузка…</div></div>
         </div>`;
     document.body.appendChild(overlay);
+    // верхний слой браузера: окно всегда поверх любых других окон/попапов/библиотек, независимо от z-index
+    try { overlay.showModal(); } catch { overlay.setAttribute('open', ''); }
+    overlay.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
 
     const modal = overlay.querySelector('.wlook-l-modal');
     const bodyEl = overlay.querySelector('.wlook-l-body');
